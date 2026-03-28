@@ -244,6 +244,68 @@ For full structural schema, see `privyhire-1/schema.graphql`.
 
 ---
 
+## 🌊 5-Wave Plan & Future Improvements
+
+**PrivyHire: The Autonomous Private Labor Market**
+PrivyHire is evolving from a matching engine into a Decentralized Labor Market Primitive. This architecture ensures high-signal discovery, guaranteed settlement, and a defensible reputation graph—all while maintaining 100% homomorphic privacy.
+
+### 💰 1. Guaranteed Settlement (The Flow Layer)
+We are integrating a Conditional Hiring Escrow that guarantees outcomes for all three parties (Employer, Candidate, Scout).
+
+- **Employer Escrow:** When a job is posted, the full salary (or first milestone) + Scout Bounty is locked.
+- **Verified Release:** Funds are released only when:
+  - **Acceptance:** Candidate homomorphically accepts (FHE AND).
+  - **Retention:** A time-lock (e.g., 30 days) expires with no dispute.
+  - **Oracle/Employer Confirmation:** Final sign-off releases the remainder.
+
+### 🧠 2. The Intent Layer (FHE Signals)
+Candidates now provide Encrypted Intent Signals that boost their score for active discovery:
+
+- `isActivelyLooking` (ebool): +20 points.
+- `isOpenToOffers` (ebool): +10 points.
+- `timeToStart` (euint32): Points scaled for "Immediate" vs "3 months".
+- **Utility:** Scouts can prioritize candidates who are actually ready to convert.
+
+### 📊 3. Tiered Scoring: Non-Linear Utility
+We are moving from "Checklists" to "Utility Functions":
+
+- **Exponential Salary Penalty:**
+  - Within Budget: Full Score.
+  - 10k over: -20%.
+  - 50k over: -90% (exponentially penalized via FHE scaling).
+- **Weighted Skills:** Employers can mark certain skills as "Core" (3x weight) vs "Nice-to-have" (0.5x weight).
+
+### 🛡️ 4. Anti-Gaming: Proof-of-Quality (Staking)
+To prevent "Scout Spam", we introduce a Staking Protocol:
+
+- **Scout Stake:** Scouts must stake `$PRIVY` / ETH to participate.
+- **Quality Slashing:** If a Scout's matches repeatedly fail (no acceptance/hire), a portion of their stake is slashed or their "Discovery Power" is reduced.
+- **Reputation Boost:** Successful hires increase a Scout's weight in the Discovery Radar.
+
+### 🌐 5. The Reputation Graph (Confidential Credibility)
+A homomorphic rating system tracks:
+
+- **Hire Success Rate:** (Matches -> Hires).
+- **Retention Score:** (Hires -> 90-day stays).
+- **Encrypted Feedback:** Aggregated scores for employers and candidates without revealing individual reviews.
+
+### 🧩 Technical Implementation Roadmap
+
+**[Smart Contracts]**
+- `PrivyHireEscrow.sol`: New settlement contract with milestone-based releases.
+- `PrivyHireStaking.sol`: Scout staking and slashing logic.
+- `PrivyHire.sol` (Update): Integrated Scoring 3.0 (Utility Functions).
+
+**[Match Agent]**
+- **Multi-Strategy Engine:** Support for multiple agent "personalities" (e.g., "The Budget Optimizer", "The Skill Specialist").
+- **Verifiable TEE Interviews:** (Wave 2) Integration with a TEE-based LLM for automated screening.
+
+**[Frontend]**
+- **Command Center:** Real-time view of "Locked Capital" (Escrows) and "Active Discovery" (Scouts).
+- **Intent Dashboard:** Candidates managed their encrypted "Visibility" settings.
+
+---
+
 ## 🗺️ Roadmap
 
 - [x] Core FHE matching engine on Arbitrum Sepolia

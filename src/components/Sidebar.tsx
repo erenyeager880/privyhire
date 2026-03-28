@@ -2,9 +2,9 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, Handshake, FileText, Settings, Fingerprint, 
-  LogOut, HelpCircle, Brain, Terminal, ShieldCheck, Star 
+  Home, HelpCircle, Brain, Terminal, ShieldCheck, Star 
 } from 'lucide-react';
-import { useDisconnect, useAccount } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { cn } from '@/src/lib/utils';
 import { motion } from 'motion/react';
 
@@ -14,16 +14,11 @@ interface SidebarProps {
 
 export function Sidebar({ userType }: SidebarProps) {
   const location = useLocation();
-  const { disconnect } = useDisconnect();
   const { address, isConnected } = useAccount();
 
   const truncateAddress = (addr: string) => 
     addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : '';
 
-  const handleLogout = () => {
-    disconnect();
-    window.location.href = '/';
-  };
 
   const Briefcase = LayoutDashboard;
 
@@ -117,13 +112,13 @@ export function Sidebar({ userType }: SidebarProps) {
           <button className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5 text-neutral-500 hover:text-white transition-all hover:bg-white/5">
             <HelpCircle size={14} />
           </button>
-          <button 
-            onClick={handleLogout}
-            className="flex-[3] flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/5 text-neutral-500 hover:text-red-400 hover:bg-red-400/5 hover:border-red-400/20 transition-all text-[9px] font-mono font-bold uppercase tracking-widest"
+          <Link 
+            to="/"
+            className="flex-[3] flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/5 text-neutral-500 hover:text-white hover:bg-white/5 transition-all text-[9px] font-mono font-bold uppercase tracking-widest"
           >
-            <LogOut size={14} />
-            <span>Terminate</span>
-          </button>
+            <Home size={14} />
+            <span>Home</span>
+          </Link>
         </div>
       </div>
     </aside>
