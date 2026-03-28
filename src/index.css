@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Newsreader", serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+  --font-display: "Newsreader", serif;
+  --font-instrument: "Instrument Serif", serif;
+  --font-barlow: "Barlow", sans-serif;
+
+  --color-primary: #ff8d8e;
+  --color-primary-dim: #ff7075;
+  --color-secondary: #fe81a3;
+  --color-tertiary: #c9a1ff;
+  --color-background: #23020c;
+  --color-surface: #23020c;
+  --color-on-surface: #ffdde3;
+  --color-on-surface-variant: #da9aa8;
+  --color-surface-container: #350817;
+  --color-surface-container-high: #3e0d1d;
+  --color-surface-container-highest: #481223;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-body;
+  }
+}
+
+.liquid-glass {
+  background: rgba(13, 1, 4, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.text-glow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.glow-aura {
+  background: radial-gradient(circle, rgba(197, 154, 255, 0.15) 0%, rgba(14, 14, 14, 0) 70%);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}

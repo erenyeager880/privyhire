@@ -1,0 +1,65 @@
+type Candidate @entity(immutable: false) {
+  id: Bytes!
+  profileSetCount: BigInt!
+  applications: [Application!]! @derivedFrom(field: "candidate")
+  ratings: [ReputationRating!]! @derivedFrom(field: "candidate")
+  matches: [MatchOutcome!]! @derivedFrom(field: "candidate")
+}
+
+type Job @entity(immutable: false) {
+  id: ID! # Uses jobId
+  employer: Bytes!
+  escrowAmount: BigInt!
+  status: String! # "Posted", "Settled", "Cancelled"
+  createdAt: BigInt!
+  settledAt: BigInt
+  cancelledAt: BigInt
+  applications: [Application!]! @derivedFrom(field: "job")
+  settlement: Settlement @derivedFrom(field: "job")
+  matches: [MatchOutcome!]! @derivedFrom(field: "job")
+}
+
+type Application @entity(immutable: false) {
+  id: ID! # jobId-candidate
+  job: Job!
+  candidate: Candidate!
+  appliedAt: BigInt!
+}
+
+type Settlement @entity(immutable: false) {
+  id: ID! # jobId
+  job: Job!
+  employer: Bytes!
+  candidate: Bytes!
+  escrowAmount: BigInt!
+  settledAt: BigInt!
+}
+
+type MatchOutcome @entity(immutable: false) {
+  id: ID! # jobId-candidate
+  job: Job!
+  candidate: Candidate!
+  employer: Bytes!
+  evaluatedAt: BigInt!
+}
+
+type ReputationRating @entity(immutable: false) {
+  id: ID! # employer-candidate-jobId
+  employer: Bytes!
+  candidate: Candidate!
+  jobId: BigInt!
+  ratedAt: BigInt!
+}
+
+type Referral @entity(immutable: false) {
+  id: Bytes! # referee address
+  referrer: Bytes!
+  registeredAt: BigInt!
+}
+
+type RewardClaim @entity(immutable: true) {
+  id: ID! # txHash
+  referrer: Bytes!
+  amount: BigInt!
+  claimedAt: BigInt!
+}

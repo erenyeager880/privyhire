@@ -1,0 +1,82 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PrivyHire
+    network: arbitrum-sepolia
+    source:
+      address: "0x1625b99BDd83a73C6131c8D0442bf9a866ceaf82"
+      abi: PrivyHire
+      startBlock: 254015900
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CandidateProfileSet
+        - JobApplied
+        - JobPosted
+        - JobSettled
+        - JobCancelled
+        - MatchEvaluated
+      abis:
+        - name: PrivyHire
+          file: ./abis/PrivyHire.json
+      eventHandlers:
+        - event: CandidateProfileSet(indexed address)
+          handler: handleCandidateProfileSet
+        - event: JobApplied(indexed address,uint256,indexed address)
+          handler: handleJobApplied
+        - event: JobPosted(indexed address,uint256,uint256)
+          handler: handleJobPosted
+        - event: JobSettled(indexed address,uint256,indexed address,uint256)
+          handler: handleJobSettled
+        - event: JobCancelled(indexed address,uint256,uint256)
+          handler: handleJobCancelled
+        - event: MatchEvaluated(indexed address,indexed uint256,indexed address)
+          handler: handleMatchEvaluated
+      file: ./src/mapping.ts
+  - kind: ethereum
+    name: PrivyHireReputationVault
+    network: arbitrum-sepolia
+    source:
+      address: "0x1184A9Cf8943518fcCE5BDcb4678b234FA1d93a0"
+      abi: PrivyHireReputationVault
+      startBlock: 254015900
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ReputationRating
+      abis:
+        - name: PrivyHireReputationVault
+          file: ./abis/PrivyHireReputationVault.json
+      eventHandlers:
+        - event: CandidateRated(indexed address,indexed address,indexed uint256)
+          handler: handleCandidateRated
+      file: ./src/mapping.ts
+  - kind: ethereum
+    name: PrivyHireReferrals
+    network: arbitrum-sepolia
+    source:
+      address: "0x95A0e8E249d5403b6c3909a881dEa357cd7919cc"
+      abi: PrivyHireReferrals
+      startBlock: 254015900
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Referral
+        - RewardClaim
+      abis:
+        - name: PrivyHireReferrals
+          file: ./abis/PrivyHireReferrals.json
+      eventHandlers:
+        - event: ReferralRegistered(indexed address,indexed address)
+          handler: handleReferralRegistered
+        - event: RewardClaimed(indexed address,uint256)
+          handler: handleRewardClaimed
+      file: ./src/mapping.ts
