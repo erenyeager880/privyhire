@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="public/logo.svg" alt="PrivyHire Protocol" width="180" draggable="false" />
   <h1>PrivyHire Enterprise</h1>
   <p><strong>The Zero-Knowledge, Identity-Shielded Recruitment Matrix</strong></p>
 
